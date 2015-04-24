@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Coding Bugs.net]]></title>
+  <link href="http://gnola14.github.io/atom.xml" rel="self"/>
+  <link href="http://gnola14.github.io/"/>
+  <updated>2015-04-23T01:27:26-03:00</updated>
+  <id>http://gnola14.github.io/</id>
+  <author>
+    <name><![CDATA[Gastón Nola]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Up and running: Octopress on Heroku in 30 minutes]]></title>
+    <link href="http://gnola14.github.io/blog/up-and-running-octopress-on-heroku-in-30-minutes/"/>
+    <updated>2013-10-19T16:10:00-02:00</updated>
+    <id>http://gnola14.github.io/blog/up-and-running-octopress-on-heroku-in-30-minutes</id>
+    <content type="html"><![CDATA[<p>As my first post, I&rsquo;ll show how easy is to deploy Octopress on Heroku. Though this instructions are aimed at Linux (and probably Mac), following them on Windows should be easy.</p>
+
+<p><em>Many thanks to these two awesome tutorials at <a href="http://def.reyssi.net/blog/2012/01/14/get-blogging-with-octopress-on-heroku/">Sam de Freyssinet&rsquo;s blog</a> and <a href="http://webdesign.tutsplus.com/tutorials/applications/getting-started-with-octopress/">WebdesignTuts+</a></em></p>
+
+<h2>Prerequisites</h2>
+
+<p>Before we get started, you should create a <a href="https://id.heroku.com/signup/www-header">Heroku account</a> if you haven&rsquo;t already.</p>
+
+<p>Also you must have installed:</p>
+
+<ul>
+<li><a href="http://www.perseosblog.com/en/posts/how-to-install-ruby-via-rvm-in-ubuntu-mint/"> Ruby </a></li>
+<li><a href="http://git-scm.com/book/en/Getting-Started-Installing-Git"> Git </a></li>
+<li><a href="https://toolbelt.heroku.com"> Heroku Toolbelt </a></li>
+</ul>
+
+
+<h2>Getting Octopress</h2>
+
+<p>First, we&rsquo;re going to clone Octopress from its <a href="http://brandonmathis.com">creator</a> repository on Github. Open up your terminal and type:</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>user@home <span class="nv">$ </span>git clone http://github.com/imathis/octopress.git ~/&lt;some folder&gt;
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You should replace <code>&lt;some folder&gt;</code> with the location where you want to download the source (e.g.: <code>~/Documents/myblog</code>).</p>
+
+<p>Once downloaded, step into that folder.</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>user@home <span class="nv">$ </span><span class="nb">cd</span> ~/Documents/myblog
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In the <code>.gitignore</code> file, delete the entry that ignores the <code>public</code> folder; since this is the folder where all the static content (HTML, CSS, js, etc) of your site is created, you want to be able to push any changes made there.</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>user@home ~/Documents/myblog <span class="nv">$ </span>grep -v <span class="s2">&quot;public&quot;</span> .gitignore &gt; .gitignore2; mv .gitignore2 .gitignore
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Install <a href="http://bundler.io">Bundler</a>, which is a Ruby gem that takes care of our project dependencies.</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>user@home ~/Documents/myblog <span class="nv">$ </span>gem install bundler
+</span><span class='line'>user@home ~/Documents/myblog <span class="nv">$ </span>bundle install
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><em>Note</em>: the gem is called <code>bundler</code>, but the command is <strong><code>bundle</code></strong></p>
+
+<p>Using <a href="http://rake.rubyforge.org/">rake</a> (Ruby&rsquo;s own version of <a href="http://www.gnu.org/software/make/">make</a>), we&rsquo;ll install Octopress base theme.</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>user@home ~/Documents/myblog <span class="nv">$ </span>rake install
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>At this point, you should have Octopress installed on your machine. You can preview it by running</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>user@home ~/Documents/myblog <span class="nv">$ </span>rake preview
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>and then opening <a href="http://localhost:4000"><a href="http://localhost:4000">http://localhost:4000</a></a> in your browser.</p>
+
+<h2>Configuring your blog</h2>
+
+<p>Before pushing the changes, you should take a couple of minutes to edit some basic settings. You can do that by modifying some of the entries in the <code>_config.yaml</code> file.</p>
+
+<p>Octopress divides its configurations into three categories:</p>
+
+<ul>
+<li><em>Main Configs</em>: where you can change your site title, author, URL, etc.</li>
+<li><em>Jekyll &amp; Plugins</em>: configurations used by Jekyll and some plugins.</li>
+<li><em>3rd Party Settings</em>: 3rd party configurations that are already bundled with Octopress (such as Github, Disqus or Twitter).</li>
+</ul>
+
+
+<p>A complete explanation of each configuration can be found <a href="http://octopress.org/docs/configuring/">here</a>.</p>
+
+<p>At the very least, you should change your site&rsquo;s URL, title, subtitle and author, which you can find under <em>Main Configs</em>. Also, I&rsquo;d encourage you to modify your permalink structure (that is, the URL with which your posts will be linked) from the default <code>/blog/:year/:month/:day/:title/</code> to <code>/blog/:title/</code>. As it turns out, using the post date in the permalink <a href="http://dashburst.com/url-permalink-seo-best-practices/">isn&rsquo;t very SEO-friendly</a> and it&rsquo;s less readable for your users. You can find that setting under <em>Jekyll &amp; Plugins</em>.</p>
+
+<p><em>Note</em>: Be careful when editing <code>_config.yml</code>. If when making <code>rake generate</code> you see a message such as this one:</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>/home/&lt;your user&gt;/.rvm/rubies/ruby-1.9.3-p448/lib/ruby/1.9.1/psych.rb:203:in parse<span class="s1">&#39;: (/home/&lt;your user&gt;/Documents/myblog/_config.yml): could not find expected &#39;</span>:<span class="err">&#39;</span> <span class="k">while </span>scanning a simple key at line 93 column 1 <span class="o">(</span>Psych::SyntaxError<span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>it means it couldn&rsquo;t parse the config file. In this case, it was because of a missing space after the colon (e.g.: <code>title:My blog!</code> instead of <code>title: My blog!</code>)</p>
+
+<h2>Deploying to Heroku</h2>
+
+<p><em>It&rsquo;s important to note that many tutorials (including Octopress official documentation) mention the <code>heroku</code> gem. This gem <a href="https://blog.heroku.com/archives/2012/10/15/upgrading-to-the-heroku-toolbelt">has been deprecated</a>, and you should use Heroku CLI tool instead (already bundled in the Heroku Toolbelt).</em></p>
+
+<p>In order to push changes into Heroku, you&rsquo;ll need SSH keys.</p>
+
+<p>Login into the Heroku CLI application by running</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>user@home ~/Documents/myblog <span class="nv">$ </span>heroku login
+</span><span class='line'>Enter your Heroku credentials.
+</span><span class='line'>Email: &lt;your heroku username&gt;
+</span><span class='line'>Password <span class="o">(</span>typing will be hidden<span class="o">)</span>: &lt;your password&gt;<span class="sb">`</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If you already generated your SSH keys, it will show you a message similar to this:</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>Found existing public key: /home/&lt;your user&gt;/.ssh/id_rsa.pub
+</span><span class='line'>Uploading ssh public key /home/&lt;your user&gt;/.ssh/id_rsa.pub
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Otherwise, heroku will prompt you to generate one and automatically register it.</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>Could not find an existing public key.
+</span><span class='line'>Would you like to generate one? <span class="o">[</span>Yn<span class="o">]</span>
+</span><span class='line'>Generating new SSH public key.
+</span><span class='line'>Uploading ssh public key /home/&lt;your user&gt;/.ssh/id_rsa.pub
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now create the Heroku App that will host your blog, either by using the <a href="https://dashboard.heroku.com/apps">web dashboard</a> or via terminal, using the following command:</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>user@home ~/Documents/myblog <span class="nv">$ </span>heroku create &lt;your app name&gt;
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now we are ready to push our blog upstream! Since Git is a DSCM, we must first commit the changes to our local repository, and then push them to the remote repository.</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>user@home ~/Documents/myblog <span class="nv">$ </span>git add .
+</span><span class='line'>user@home ~/Documents/myblog <span class="nv">$ </span>git commit -am <span class="s1">&#39;Initial commit of my awesome blog&#39;</span>
+</span><span class='line'>user@home ~/Documents/myblog <span class="nv">$ </span>git push heroku master
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>That&rsquo;s it! Your blog will be available at <code>&lt;your app name&gt;.herokuapp.com</code>. So if your app is called myblog, the final URL will be <code>myblog.herokuapp.com</code></p>
+]]></content>
+  </entry>
+  
+</feed>

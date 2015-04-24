@@ -1,0 +1,342 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Coding Bugs.net</title>
+  <meta name="author" content="Gastón Nola">
+
+  
+  <meta name="description" content="As my first post, I&rsquo;ll show how easy is to deploy Octopress on Heroku. Though this instructions are aimed at Linux (and probably Mac), &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://gnola14.github.io">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Coding Bugs.net" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-8942175-2']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Coding Bugs.net</a></h1>
+  
+    <h2>It's not a bug, it's an intentional side effect.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:gnola14.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about">About</a></li>
+  <li><a href="/projects">Projects</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/up-and-running-octopress-on-heroku-in-30-minutes/">Up and Running: Octopress on Heroku in 30 Minutes</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-10-19T16:10:00-02:00" pubdate data-updated="true">Oct 19<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>As my first post, I&rsquo;ll show how easy is to deploy Octopress on Heroku. Though this instructions are aimed at Linux (and probably Mac), following them on Windows should be easy.</p>
+
+<p><em>Many thanks to these two awesome tutorials at <a href="http://def.reyssi.net/blog/2012/01/14/get-blogging-with-octopress-on-heroku/">Sam de Freyssinet&rsquo;s blog</a> and <a href="http://webdesign.tutsplus.com/tutorials/applications/getting-started-with-octopress/">WebdesignTuts+</a></em></p>
+
+<h2>Prerequisites</h2>
+
+<p>Before we get started, you should create a <a href="https://id.heroku.com/signup/www-header">Heroku account</a> if you haven&rsquo;t already.</p>
+
+<p>Also you must have installed:</p>
+
+<ul>
+<li><a href="http://www.perseosblog.com/en/posts/how-to-install-ruby-via-rvm-in-ubuntu-mint/"> Ruby </a></li>
+<li><a href="http://git-scm.com/book/en/Getting-Started-Installing-Git"> Git </a></li>
+<li><a href="https://toolbelt.heroku.com"> Heroku Toolbelt </a></li>
+</ul>
+
+
+<h2>Getting Octopress</h2>
+
+<p>First, we&rsquo;re going to clone Octopress from its <a href="http://brandonmathis.com">creator</a> repository on Github. Open up your terminal and type:</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>user@home <span class="nv">$ </span>git clone http://github.com/imathis/octopress.git ~/&lt;some folder&gt;
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You should replace <code>&lt;some folder&gt;</code> with the location where you want to download the source (e.g.: <code>~/Documents/myblog</code>).</p>
+
+<p>Once downloaded, step into that folder.</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>user@home <span class="nv">$ </span><span class="nb">cd</span> ~/Documents/myblog
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In the <code>.gitignore</code> file, delete the entry that ignores the <code>public</code> folder; since this is the folder where all the static content (HTML, CSS, js, etc) of your site is created, you want to be able to push any changes made there.</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>user@home ~/Documents/myblog <span class="nv">$ </span>grep -v <span class="s2">&quot;public&quot;</span> .gitignore &gt; .gitignore2; mv .gitignore2 .gitignore
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Install <a href="http://bundler.io">Bundler</a>, which is a Ruby gem that takes care of our project dependencies.</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>user@home ~/Documents/myblog <span class="nv">$ </span>gem install bundler
+</span><span class='line'>user@home ~/Documents/myblog <span class="nv">$ </span>bundle install
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><em>Note</em>: the gem is called <code>bundler</code>, but the command is <strong><code>bundle</code></strong></p>
+
+<p>Using <a href="http://rake.rubyforge.org/">rake</a> (Ruby&rsquo;s own version of <a href="http://www.gnu.org/software/make/">make</a>), we&rsquo;ll install Octopress base theme.</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>user@home ~/Documents/myblog <span class="nv">$ </span>rake install
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>At this point, you should have Octopress installed on your machine. You can preview it by running</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>user@home ~/Documents/myblog <span class="nv">$ </span>rake preview
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>and then opening <a href="http://localhost:4000"><a href="http://localhost:4000">http://localhost:4000</a></a> in your browser.</p>
+
+<h2>Configuring your blog</h2>
+
+<p>Before pushing the changes, you should take a couple of minutes to edit some basic settings. You can do that by modifying some of the entries in the <code>_config.yaml</code> file.</p>
+
+<p>Octopress divides its configurations into three categories:</p>
+
+<ul>
+<li><em>Main Configs</em>: where you can change your site title, author, URL, etc.</li>
+<li><em>Jekyll &amp; Plugins</em>: configurations used by Jekyll and some plugins.</li>
+<li><em>3rd Party Settings</em>: 3rd party configurations that are already bundled with Octopress (such as Github, Disqus or Twitter).</li>
+</ul>
+
+
+<p>A complete explanation of each configuration can be found <a href="http://octopress.org/docs/configuring/">here</a>.</p>
+
+<p>At the very least, you should change your site&rsquo;s URL, title, subtitle and author, which you can find under <em>Main Configs</em>. Also, I&rsquo;d encourage you to modify your permalink structure (that is, the URL with which your posts will be linked) from the default <code>/blog/:year/:month/:day/:title/</code> to <code>/blog/:title/</code>. As it turns out, using the post date in the permalink <a href="http://dashburst.com/url-permalink-seo-best-practices/">isn&rsquo;t very SEO-friendly</a> and it&rsquo;s less readable for your users. You can find that setting under <em>Jekyll &amp; Plugins</em>.</p>
+
+<p><em>Note</em>: Be careful when editing <code>_config.yml</code>. If when making <code>rake generate</code> you see a message such as this one:</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>/home/&lt;your user&gt;/.rvm/rubies/ruby-1.9.3-p448/lib/ruby/1.9.1/psych.rb:203:in parse<span class="s1">&#39;: (/home/&lt;your user&gt;/Documents/myblog/_config.yml): could not find expected &#39;</span>:<span class="err">&#39;</span> <span class="k">while </span>scanning a simple key at line 93 column 1 <span class="o">(</span>Psych::SyntaxError<span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>it means it couldn&rsquo;t parse the config file. In this case, it was because of a missing space after the colon (e.g.: <code>title:My blog!</code> instead of <code>title: My blog!</code>)</p>
+
+<h2>Deploying to Heroku</h2>
+
+<p><em>It&rsquo;s important to note that many tutorials (including Octopress official documentation) mention the <code>heroku</code> gem. This gem <a href="https://blog.heroku.com/archives/2012/10/15/upgrading-to-the-heroku-toolbelt">has been deprecated</a>, and you should use Heroku CLI tool instead (already bundled in the Heroku Toolbelt).</em></p>
+
+<p>In order to push changes into Heroku, you&rsquo;ll need SSH keys.</p>
+
+<p>Login into the Heroku CLI application by running</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>user@home ~/Documents/myblog <span class="nv">$ </span>heroku login
+</span><span class='line'>Enter your Heroku credentials.
+</span><span class='line'>Email: &lt;your heroku username&gt;
+</span><span class='line'>Password <span class="o">(</span>typing will be hidden<span class="o">)</span>: &lt;your password&gt;<span class="sb">`</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If you already generated your SSH keys, it will show you a message similar to this:</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>Found existing public key: /home/&lt;your user&gt;/.ssh/id_rsa.pub
+</span><span class='line'>Uploading ssh public key /home/&lt;your user&gt;/.ssh/id_rsa.pub
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Otherwise, heroku will prompt you to generate one and automatically register it.</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>Could not find an existing public key.
+</span><span class='line'>Would you like to generate one? <span class="o">[</span>Yn<span class="o">]</span>
+</span><span class='line'>Generating new SSH public key.
+</span><span class='line'>Uploading ssh public key /home/&lt;your user&gt;/.ssh/id_rsa.pub
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now create the Heroku App that will host your blog, either by using the <a href="https://dashboard.heroku.com/apps">web dashboard</a> or via terminal, using the following command:</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>user@home ~/Documents/myblog <span class="nv">$ </span>heroku create &lt;your app name&gt;
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now we are ready to push our blog upstream! Since Git is a DSCM, we must first commit the changes to our local repository, and then push them to the remote repository.</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>user@home ~/Documents/myblog <span class="nv">$ </span>git add .
+</span><span class='line'>user@home ~/Documents/myblog <span class="nv">$ </span>git commit -am <span class="s1">&#39;Initial commit of my awesome blog&#39;</span>
+</span><span class='line'>user@home ~/Documents/myblog <span class="nv">$ </span>git push heroku master
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>That&rsquo;s it! Your blog will be available at <code>&lt;your app name&gt;.herokuapp.com</code>. So if your app is called myblog, the final URL will be <code>myblog.herokuapp.com</code></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/up-and-running-octopress-on-heroku-in-30-minutes/">Up and Running: Octopress on Heroku in 30 Minutes</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>  
+<a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/deed.en_US" style="padding-right: 5px;" target="_blank"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/3.0/80x15.png" /></a> 2015 - Gastón Nola | <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'codingbugs';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
