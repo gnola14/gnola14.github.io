@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Coding Bugs.net]]></title>
-  <link href="http://codingbugs.net/atom.xml" rel="self"/>
-  <link href="http://codingbugs.net/"/>
-  <updated>2015-04-24T03:04:17-03:00</updated>
-  <id>http://codingbugs.net/</id>
+  <link href="http://gnola14.github.io/atom.xml" rel="self"/>
+  <link href="http://gnola14.github.io/"/>
+  <updated>2015-04-24T03:51:27-03:00</updated>
+  <id>http://gnola14.github.io/</id>
   <author>
     <name><![CDATA[Gastón Nola]]></name>
     
